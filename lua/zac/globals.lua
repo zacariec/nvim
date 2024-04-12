@@ -4,7 +4,7 @@ M.servers = {
   "eslint",
   "denols",
 	"tsserver",
-	"sumneko_lua",
+	"lua_ls",
 	"tailwindcss",
   "html",
   "astro",
