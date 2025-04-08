@@ -7,8 +7,9 @@ local cmd = vim.cmd
 -- Sets
 set.backup = false
 set.writebackup = false
--- set.tabstop = 2
--- set.shiftwidth = 2
+set.tabstop = 2
+set.shiftwidth = 2
+set.smartindent = false
 set.autochdir = true
 set.autoindent = true
 set.endofline = true
@@ -23,14 +24,14 @@ set.incsearch = true
 set.hlsearch = true
 set.smartcase = true
 set.ignorecase = true
-set.backspace = 'indent,start,eol'
+set.backspace = "indent,start,eol"
 set.softtabstop = 0
 set.expandtab = true
 set.smarttab = true
+set.laststatus = 3
 
 set.splitright = true
 set.splitbelow = true
-
 
 -- Window Options
 wo.number = true
@@ -38,21 +39,18 @@ wo.cursorline = true
 
 vim.diagnostic.config({
 	update_in_insert = true,
-  virtual_lines = { prefix = "🔥" },
-  virtual_text = false,
+	virtual_lines = { prefix = "🔥" },
+	virtual_text = false,
 })
 
-lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics,
-	{
-		underline = true,
-		virtual_text = {
-			spacing = 5,
-			severity_limit = 'Warning',
-		},
-		update_in_insert = true,
-	}
-)
+lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	underline = true,
+	virtual_text = {
+		spacing = 5,
+		severity_limit = "Warning",
+	},
+	update_in_insert = true,
+})
 
 vim.opt.termguicolors = true
 -- auto source vim
@@ -62,5 +60,3 @@ cmd([[
 		autocmd BufWritePost $MYVIMRC nested source $MYVIMRC
 	augroup end
 ]])
-
-
