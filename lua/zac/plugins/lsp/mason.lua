@@ -22,7 +22,6 @@ return {
 		mason_lspconfig.setup({
 			automatic_installation = true,
 			ensure_installed = {
-				"denols",
 				"ts_ls",
 				"custom_elements_ls",
 				"lua_ls",
