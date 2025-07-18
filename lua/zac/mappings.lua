@@ -106,3 +106,11 @@ keymap.set("n", "]b", "<cmd>bprev<CR>", { desc = "Previous Buffer", silent = tru
 keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })
 keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Next tab" })
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Previous tab" })
+
+keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Go to references" })
+keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
+keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
+keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
+keymap.set("n", "<leader>ds", vim.lsp.buf.document_symbol, { desc = "Document Symbol" })
