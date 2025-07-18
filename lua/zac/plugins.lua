@@ -47,7 +47,8 @@ return require('packer').startup(function()
 
 	-- GIT plugins
 	use {
-		"f-person/git-blame.nvim",
+		"tpope/vim-fugitive",
+		"f-person/git-blame.nvim"
 	}
 
 	-- LSP plugins
