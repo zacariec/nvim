@@ -19,10 +19,9 @@ set.incsearch = true
 set.hlsearch = true
 set.smartcase = true
 set.backspace = 'indent,start,eol'
-
-
--- Buffer Options
-bo.expandtab = true
+set.softtabstop = 0
+set.expandtab = true
+set.smarttab = true
 
 -- Window Options
 wo.number = true
