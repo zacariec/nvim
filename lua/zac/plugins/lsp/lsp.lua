@@ -97,6 +97,27 @@ return {
 					filetypes = { "liquid" },
 					single_file_support = true,
 					capabilities = capabilities,
+					root_dir = function(fname)
+						-- Avoid returning empty string which causes 'file:////' URIs
+						local util = require("lspconfig.util")
+						return util.find_git_ancestor(fname) or util.path.dirname(fname) or vim.loop.cwd()
+					end,
+					on_init = function(client)
+						-- Optional: can inspect client.config.root_dir here
+						if client.config.root_dir == "" or client.config.root_dir == nil then
+							vim.notify("[Shopify LSP] root_dir was empty, fallback used", vim.log.levels.WARN)
+						end
+					end,
+				})
+			end,
+			["tailwindcss"] = function()
+				lspconfig["tailwindcss"].setup({
+					autostart = true,
+					filetypes = { "liquid", "html", "js", "ts", "jsx", "tsx", "svelte", "astro" },
+					single_file_support = true,
+					capabilities = capabilities,
+					root_dir = lspconfig.util.root_pattern("tailwind.config.*"),
+					dynamicRegistration = true,
 				})
 			end,
 			["theme_check"] = function()
@@ -134,6 +155,12 @@ return {
 					autostart = true,
 					capabilities = capabilities,
 					root_dir = lspconfig.util.root_pattern("go.mod"),
+				})
+			end,
+			["custom-elements-languageserver"] = function()
+				lspconfig["custom-elements-languageserver"].setup({
+					autostart = true,
+					capabilities = capabilities,
 				})
 			end,
 		})

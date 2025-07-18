@@ -23,7 +23,8 @@ return {
 			automatic_installation = true,
 			ensure_installed = {
 				"denols",
-				"tsserver",
+				"ts_ls",
+				"custom_elements_ls",
 				"lua_ls",
 				"tailwindcss",
 				"html",
@@ -38,6 +39,7 @@ return {
 		mason_tool_installer.setup({
 			ensure_installed = {
 				"stylua",
+				"prettier",
 			},
 		})
 	end,

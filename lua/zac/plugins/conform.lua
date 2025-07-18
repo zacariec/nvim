@@ -1,6 +1,6 @@
 return {
 	"stevearc/conform.nvim",
-	event = { "BufReadPre", "BufNewFile" },
+	event = { "LspAttach", "BufReadPre", "BufNewFile" },
 	dependencies = { "mason.nvim" },
 	lazy = true,
 	cmd = "ConformInfo",
@@ -32,10 +32,14 @@ return {
 				graphql = { "prettier" },
 				lua = { "stylua" },
 			},
+			format = {
+				async = true,
+				lsp_fallback = true,
+			},
 			format_on_save = {
 				lsp_fallback = true,
 				async = false,
-				timeout_ms = 500,
+				timeout_ms = 2500,
 			},
 		})
 	end,
