@@ -3,31 +3,21 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim",
-		-- "nvimtools/none-ls.nvim",
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{ "folke/neodev.nvim", opts = {} },
 	},
 	config = function()
-		-- import lspconfig plugin
 		local lspconfig = require("lspconfig")
-
-		-- import mason_lspconfig plugin
 		local mason_lspconfig = require("mason-lspconfig")
-
-		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
 		local keymap = vim.keymap -- for conciseness
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
-				-- Buffer local mappings.
-				-- See `:help vim.lsp.*` for documentation on any of the below functions
 				local opts = { buffer = ev.buf, silent = true }
 
-				-- set keybinds
 				opts.desc = "Show LSP references"
 				keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
@@ -67,12 +57,6 @@ return {
 		})
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()
-		--
-		-- capabilities.textDocument.foldingRange = {
-		-- 	dynamicRegistration = false,
-		-- 	lineFoldingOnly = true,
-		-- }
-
 		local signs = {
 			Error = "⨂ ",
 			Warn = "⚠ ",
@@ -85,14 +69,9 @@ return {
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end
 
-		mason_lspconfig.setup_handlers({
-			function(server_name)
+		for _, server_name in ipairs(mason_lspconfig.get_installed_servers()) do
+			if server_name == "shopify_theme_ls" then
 				lspconfig[server_name].setup({
-					capabilities = capabilities,
-				})
-			end,
-			["shopify_theme_ls"] = function()
-				lspconfig["shopify_theme_ls"].setup({
 					autostart = true,
 					filetypes = { "liquid" },
 					single_file_support = true,
@@ -109,9 +88,8 @@ return {
 						end
 					end,
 				})
-			end,
-			["tailwindcss"] = function()
-				lspconfig["tailwindcss"].setup({
+			elseif server_name == "tailwindcss" then
+				lspconfig[server_name].setup({
 					autostart = true,
 					filetypes = { "liquid", "html", "js", "ts", "jsx", "tsx", "svelte", "astro" },
 					single_file_support = true,
@@ -119,50 +97,25 @@ return {
 					root_dir = lspconfig.util.root_pattern("tailwind.config.*"),
 					dynamicRegistration = true,
 				})
-			end,
-			["theme_check"] = function()
-				lspconfig["theme_check"].setup({
+			elseif server_name == "theme_check" then
+				lspconfig[server_name].setup({
 					autostart = true,
 					filetypes = { "liquid" },
 					single_file_support = true,
 					capabilities = capabilities,
 				})
-			end,
-			["html"] = function()
-				lspconfig["html"].setup({
+			elseif server_name == "html" then
+				lspconfig[server_name].setup({
 					autostart = true,
 					filetypes = { "html" },
 					single_file_support = true,
 					capabilities = capabilities,
 				})
-			end,
-			["tsserver"] = function()
-				lspconfig["tsserver"].setup({
-					autostart = true,
-					capabilities = capabilities,
-					root_dir = lspconfig.util.root_pattern("package.json"),
-				})
-			end,
-			["denols"] = function()
-				lspconfig["denols"].setup({
-					autostart = true,
-					capabilities = capabilities,
-					root_dir = lspconfig.util.root_pattern("deno.jsonc"),
-				})
-			end,
-			["gopls"] = function()
-				lspconfig["gopls"].setup({
-					autostart = true,
-					capabilities = capabilities,
-					root_dir = lspconfig.util.root_pattern("go.mod"),
-				})
-			end,
-			["custom-elements-languageserver"] = function()
-				lspconfig["custom-elements-languageserver"].setup({
-					autostart = true,
+			else
+				lspconfig[server_name].setup({
 					capabilities = capabilities,
 				})
-			end,
-		})
+			end
+		end
 	end,
 }
