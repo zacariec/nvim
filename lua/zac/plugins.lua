@@ -57,6 +57,7 @@ return require('packer').startup(function()
 		"williamboman/nvim-lsp-installer",
 		"neovim/nvim-lspconfig", -- Configurations for Nvim LSP
 		"onsails/lspkind.nvim",
+		"ray-x/lsp_signature.nvim",
 	}
 
 	-- Diagnostic plugins
