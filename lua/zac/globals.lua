@@ -1,6 +1,13 @@
 local M = {}
 
 M.servers = {
+  "denols",
+	"tsserver",
+	"sumneko_lua",
+	"tailwindcss",
+}
+
+M.autoservers = {
 	"bashls",
 	"cssls",
 	"dockerls",
@@ -10,13 +17,9 @@ M.servers = {
 	"graphql",
 	"html",
 	"jsonls",
-	"tsserver",
-	"sumneko_lua",
 	"marksman",
 	"theme_check",
 	"taplo",
-	"tailwindcss",
-	"rome",
 	"yamlls"
 }
 
