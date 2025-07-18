@@ -55,17 +55,8 @@ local lsp_flags = {
 -- Setup nvim-cmp.
 local cmp = require'cmp'
 cmp.setup({
-	formatting = {
-		format = require'lspkind'.cmp_format({
-			mode = "symbol",
-			maxwidth = 50
-		})
-	},
-	snippet = {
-		expand = function(args)
-			vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-		end,
-	},
+	formatting = {},
+	snippet = {},
 	window = {
 		completion = cmp.config.window.bordered(),
 		documentation = cmp.config.window.bordered(),
@@ -79,7 +70,7 @@ cmp.setup({
 	}),
 	sources = cmp.config.sources({
 		{ name = 'nvim_lsp' },
-		{ name = 'ultisnips' }, -- For ultisnips users.
+    { name = "cmp_tabnine" }
 	}, {
 		{ name = 'buffer' },
 	})
@@ -114,7 +105,7 @@ cmp.setup.cmdline(':', {
 
 -- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
+local lspconfig = require'lspconfig'
 
 M = require "zac.globals"
 
@@ -136,32 +127,39 @@ require'lspconfig'.sumneko_lua.setup{
 	}
 }
 
-require'lspconfig'.denols.setup{
+lspconfig.astro.setup{
   on_attach = on_attach,
-  root_dir = require'lspconfig'.util.root_pattern("deno.json"),
+  flags = lsp_flags,
+  autostart = true,
+  capabilities = capabilities,
+}
+
+lspconfig.denols.setup{
+  on_attach = on_attach,
+  root_dir = lspconfig.util.root_pattern("deno.json"),
   flags = lsp_flags,
   autostart = true,
   capabilities = capabilities,
   single_file_support = false,
 }
 
-require'lspconfig'.tsserver.setup {
+lspconfig.tsserver.setup {
   on_attach = on_attach,
-  root_dir = require'lspconfig'.util.root_pattern("package.json"),
+  root_dir = lspconfig.util.root_pattern("package.json"),
   flags = lsp_flags,
   autostart = true,
   capabilities = capabilities,
 }
 
-require'lspconfig'.tailwindcss.setup {
+lspconfig.tailwindcss.setup {
   on_attach = on_attach,
-  root_dir = require'lspconfig'.util.root_pattern("tailwind.config.*", "package.json"),
+  root_dir = lspconfig.util.root_pattern("tailwind.config.*", "package.json"),
   flags = lsp_flags,
   autostart = true,
   capabilities = capabilities
 }
 
-require'lspconfig'.html.setup {
+lspconfig.html.setup {
   on_attach = on_attach,
   flags = lsp_flags,
   autostart = true,
@@ -178,7 +176,7 @@ require'lspconfig'.html.setup {
 }
 
 for _,server in pairs(M.autoservers) do
-  require('lspconfig')[server].setup{
+  lspconfig[server].setup{
     on_attach = on_attach,
     flags = lsp_flags,
     capabilities = capabilities,

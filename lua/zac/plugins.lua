@@ -53,6 +53,11 @@ return require('packer').startup(function()
       })
     end
   }
+  use {
+    'jonsmithers/vim-html-template-literals',
+    'leafgarland/typescript-vim',
+    requires = 'leafgarland/typescript-vim',
+  }
 	-- =====================================
 	-- End General plugins
 	-- =====================================
@@ -111,9 +116,12 @@ return require('packer').startup(function()
 	use {
 		"williamboman/nvim-lsp-installer",
 		"neovim/nvim-lspconfig", -- Configurations for Nvim LSP
-		"onsails/lspkind.nvim",
+	"onsails/lspkind.nvim",
 		"ray-x/lsp_signature.nvim",
+    "edgedb/edgedb-vim",
 	}
+  use "prettier/vim-prettier"
+
 	-- =====================================
 	-- End LSP plugins
 	-- =====================================
@@ -133,11 +141,6 @@ return require('packer').startup(function()
 			}
 		end
 	}
-	use({
-    "glepnir/lspsaga.nvim",
-    branch = "main",
-    config = require'zac.lspsaga'
-	})
 
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
@@ -159,9 +162,13 @@ return require('packer').startup(function()
       'quangnguyen30192/cmp-nvim-ultisnips',
       'nvim-treesitter/nvim-treesitter',
       config = function ()
-        require('cmp_nvim_ultisnips').setup{}
+        require('cmp-nvim-ultisnips').setup{}
       end,
     }
+  }
+
+  use {
+    "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp"
   }
 
 	use {
@@ -174,6 +181,7 @@ return require('packer').startup(function()
     "simrat39/rust-tools.nvim",
     "mfussenegger/nvim-dap"
 	}
+
 	-- =====================================
 	-- End Autcompletetion plugins
 	-- =====================================
@@ -192,8 +200,12 @@ return require('packer').startup(function()
 	-- =====================================
 	-- Start Snippet plugins
 	-- =====================================
-	use {
-	}
+  
+  use {
+    "SirVer/ultisnips",
+    "honza/vim-snippets"
+  }
+
 	-- =====================================
 	-- End snippet pluings
 	-- =====================================
@@ -221,6 +233,7 @@ return require('packer').startup(function()
 	-- =====================================
 	-- Treesitter plugins
 	-- =====================================
+  use "virchau13/tree-sitter-astro"
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ':TSUpdate'
@@ -269,6 +282,8 @@ return require('packer').startup(function()
       }
     end
   }
+
+  use 'wuelnerdotexe/vim-astro'
 	-- =====================================
 	-- End Treesitter plugins
 	-- =====================================

@@ -5,7 +5,8 @@ M.servers = {
 	"tsserver",
 	"sumneko_lua",
 	"tailwindcss",
-  "html"
+  "html",
+  "astro",
 }
 
 M.autoservers = {
@@ -17,6 +18,7 @@ M.autoservers = {
 	"graphql",
 	"jsonls",
 	"marksman",
+  "prismals",
 	"theme_check",
 	"taplo",
 	"yamlls"
