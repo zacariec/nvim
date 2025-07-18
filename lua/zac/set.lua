@@ -29,7 +29,8 @@ wo.cursorline = true
 
 vim.diagnostic.config({
 	update_in_insert = true,
-	vim.diagnostic.config({ virtual_lines = { prefix = "🔥" } })
+  virtual_lines = { prefix = "🔥" },
+  virtual_text = false,
 })
 
 lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
