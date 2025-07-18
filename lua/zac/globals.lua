@@ -3,7 +3,6 @@ local M = {}
 M.servers = {
 	"bashls",
 	"cssls",
-	"denols",
 	"dockerls",
 	"eslint",
 	"gopls",
@@ -11,7 +10,6 @@ M.servers = {
 	"graphql",
 	"html",
 	"jsonls",
-	"quick_lint_js",
 	"tsserver",
 	"sumneko_lua",
 	"marksman",
