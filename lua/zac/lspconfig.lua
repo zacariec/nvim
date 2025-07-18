@@ -142,6 +142,7 @@ require'lspconfig'.denols.setup{
   flags = lsp_flags,
   autostart = true,
   capabilities = capabilities,
+  single_file_support = false,
 }
 
 require'lspconfig'.tsserver.setup {
@@ -154,10 +155,26 @@ require'lspconfig'.tsserver.setup {
 
 require'lspconfig'.tailwindcss.setup {
   on_attach = on_attach,
-  root_dir = require'lspconfig'.util.root_pattern("tailwind.config.*"),
+  root_dir = require'lspconfig'.util.root_pattern("tailwind.config.*", "package.json"),
   flags = lsp_flags,
   autostart = true,
   capabilities = capabilities
+}
+
+require'lspconfig'.html.setup {
+  on_attach = on_attach,
+  flags = lsp_flags,
+  autostart = true,
+  filetypes = { "html", "liquid" },
+  capabilities = capabilities,
+  init_options = {
+    configurationSection = { "html", "css", "javascript", "liquid" },
+    embeddedLanguages = {
+      css = true,
+      javascript = true,
+    },
+    provideFormatter = true
+  },
 }
 
 for _,server in pairs(M.autoservers) do
@@ -168,3 +185,6 @@ for _,server in pairs(M.autoservers) do
   }
 end
 
+vim.g.markdown_fenced_languages = {
+  "ts=typescript"
+}
