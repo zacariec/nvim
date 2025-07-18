@@ -40,6 +40,14 @@ return require('packer').startup(function()
 		"nvim-lua/plenary.nvim",
 	}
 
+	use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+	}
+
+
 	-- Theme plugins
 	use {
   	"Mofiqul/dracula.nvim",
