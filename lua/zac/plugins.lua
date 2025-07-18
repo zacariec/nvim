@@ -34,12 +34,27 @@ packer.init({
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function()
-	-- General plugins
+	-- =====================================
+	-- Start General plugins
+	-- =====================================
 	use {
   	"wbthomason/packer.nvim",
 		"nvim-lua/plenary.nvim",
 	}
+  use 'tpope/vim-eunuch'
+	-- =====================================
+	-- End General plugins
+	-- =====================================
 
+	-- =====================================
+	-- Start Comment plugins
+	-- =====================================
+	use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+	}
 
 	use {
   	"folke/todo-comments.nvim",
@@ -48,21 +63,21 @@ return require('packer').startup(function()
     	require("todo-comments").setup {}
   	end
 	}
+	-- =====================================
+	-- End Comment Plugins
+	-- =====================================
 
-	use {
-    'numToStr/Comment.nvim',
-    config = function()
-        require('Comment').setup()
-    end
-	}
+	-- =====================================
+	-- Start Theme plugins
+	-- =====================================
+	use 'folke/tokyonight.nvim'
+	-- =====================================
+	-- End Theme plugins
+	-- =====================================
 
-
-	-- Theme plugins
-	use {
-  	"Mofiqul/dracula.nvim",
-	}
-
-	-- GIT plugins
+	-- =====================================
+	-- Start GIT plugins
+	-- =====================================
 	use {
 		"tpope/vim-fugitive",
 		"f-person/git-blame.nvim",
@@ -75,24 +90,50 @@ return require('packer').startup(function()
     	require('gitsigns').setup()
   	end
 	}
+	-- =====================================
+	-- End GIT Plugins
+	-- =====================================
 
-	-- LSP plugins
+	-- =====================================
+	-- Start LSP plugins
+	-- =====================================
 	use {
 		"williamboman/nvim-lsp-installer",
 		"neovim/nvim-lspconfig", -- Configurations for Nvim LSP
 		"onsails/lspkind.nvim",
 		"ray-x/lsp_signature.nvim",
 	}
+	-- =====================================
+	-- End LSP plugins
+	-- =====================================
 
-  -- Diagnostic plugins
-  use {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    config = function()
-      require("lsp_lines").setup()
-    end
-  }
 
-	--Autocompletion plugins
+	-- =====================================
+	-- Start Diagnostics plugins
+	-- =====================================
+	use {
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+		config = function()
+			require("trouble").setup {
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			}
+		end
+	}
+	use({
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    config = require'zac.lspsaga'
+	})
+	-- =====================================
+	-- End Diagnostics plugins
+	-- =====================================
+
+	-- =====================================
+	-- Start Autocompletion plugins
+	-- =====================================
 	use {
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-buffer",
@@ -100,35 +141,66 @@ return require('packer').startup(function()
 		"hrsh7th/cmp-cmdline",
 		"hrsh7th/nvim-cmp",
 		"windwp/nvim-ts-autotag",
+    "rcarriga/nvim-notify",
+    "simrat39/rust-tools.nvim",
+    "mfussenegger/nvim-dap"
 	}
+	-- =====================================
+	-- End Autcompletetion plugins
+	-- =====================================
 
-	-- Autopairs plugins
+	-- =====================================
+	-- Start Autopairs plugins
+	-- =====================================
 	use {
 		"windwp/nvim-autopairs",
     config = function() require("nvim-autopairs").setup {} end
 	}
+	-- =====================================
+	-- End autpairs plugins
+	-- =====================================
 
-	-- Snippet plugins
+	-- =====================================
+	-- Start Snippet plugins
+	-- =====================================
 	use {
     'SirVer/ultisnips',
     'quangnguyen30192/cmp-nvim-ultisnips'
 	}
+	-- =====================================
+	-- End snippet pluings
+	-- =====================================
 
-	-- Status bar plugins
+	-- =====================================
+	-- Start Status bar plugins
+	-- =====================================
   use { "nvim-lualine/lualine.nvim", requires = {
       'kyazdani42/nvim-web-devicons',
       opt = true
     }
   }
+	-- =====================================
+	-- End Status bar plugins
+	-- =====================================
 
+	-- =====================================
 	-- Telescope plugins
+	-- =====================================
   use { "nvim-telescope/telescope.nvim", tag = '0.1.0', }
+	-- =====================================
+	-- End Telescope plugins
+	-- =====================================
 
+	-- =====================================
 	-- Treesitter plugins
+	-- =====================================
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ':TSUpdate'
   }
+	-- =====================================
+	-- End Treesitter plugins
+	-- =====================================
 
 	-- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
