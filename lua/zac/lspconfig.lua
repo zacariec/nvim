@@ -118,15 +118,12 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 
 M = require "zac.globals"
 
-for _,server in pairs(M.servers) do
-	require('lspconfig')[server].setup{
-		on_attach = on_attach,
-		flags = lsp_flags,
-		capabilities = capabilities,
-	}
-end
-
 require'lspconfig'.sumneko_lua.setup{
+  on_attach = on_attach,
+  root_dir = require'lspconfig'.util.root_pattern(".luarc.json"),
+  flags = lsp_flags,
+  autostart = true,
+  capabilities = capabilities,
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -139,5 +136,35 @@ require'lspconfig'.sumneko_lua.setup{
 	}
 }
 
-require'lspconfig'.eslint.setup{}
+require'lspconfig'.denols.setup{
+  on_attach = on_attach,
+  root_dir = require'lspconfig'.util.root_pattern("deno.json"),
+  flags = lsp_flags,
+  autostart = true,
+  capabilities = capabilities,
+}
+
+require'lspconfig'.tsserver.setup {
+  on_attach = on_attach,
+  root_dir = require'lspconfig'.util.root_pattern("package.json"),
+  flags = lsp_flags,
+  autostart = true,
+  capabilities = capabilities,
+}
+
+require'lspconfig'.tailwindcss.setup {
+  on_attach = on_attach,
+  root_dir = require'lspconfig'.util.root_pattern("tailwind.config.*"),
+  flags = lsp_flags,
+  autostart = true,
+  capabilities = capabilities
+}
+
+for _,server in pairs(M.autoservers) do
+  require('lspconfig')[server].setup{
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+  }
+end
 
