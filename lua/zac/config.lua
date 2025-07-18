@@ -55,6 +55,26 @@ lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnosti
 })
 
 vim.opt.termguicolors = true
+
+vim.lsp.config("*", {
+	capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities()),
+})
+
+vim.lsp.enable({
+	"astro",
+	"cssls",
+	"denols",
+	"gopls",
+	"graphql",
+	"html",
+	"jsonls",
+	"lua_ls",
+	"rust_analyzer",
+	"shopify_theme_ls",
+	"tailwindcss",
+	"ts_ls",
+})
+
 -- auto source vim
 cmd([[
   augroup neovim
