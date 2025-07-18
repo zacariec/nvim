@@ -84,13 +84,13 @@ return require('packer').startup(function()
 		"ray-x/lsp_signature.nvim",
 	}
 
-	-- Diagnostic plugins
-	use {
-		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-		config = function()
-			require("lsp_lines").setup()
-		end
-	}
+  -- Diagnostic plugins
+  use {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end
+  }
 
 	--Autocompletion plugins
 	use {
