@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
 
-require("lazy").setup({ { import = "zac.plugins" }, { import = "zac.plugins.lsp" } }, {
+require("lazy").setup({ { import = "zac.plugins" } }, {
 	checker = {
 		enabled = true,
 		notify = false,

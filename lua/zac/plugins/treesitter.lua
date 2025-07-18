@@ -67,17 +67,5 @@ return {
 				},
 			},
 		})
-
-		-- local parser_config = parsers.get_parser_configs()
-		-- parser_config.liquid = {
-		-- 	install_info = {
-		-- 		url = "~/treesitter/tree-sitter-liquid",
-		-- 		files = { "src/parser.c" },
-		-- 		branch = "main",
-		-- 		generate_requires_npm = false,
-		-- 		requires_generate_from_grammar = false,
-		-- 	},
-		-- 	filetype = "liquid",
-		-- }
 	end,
 }
