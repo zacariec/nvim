@@ -8,6 +8,14 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 require'lsp_signature'.setup()
 
+local lsp = vim.lsp
+local handlers = lsp.handlers
+
+-- Hover doc popup
+local pop_opts = { border = "rounded", max_width = 80 }
+handlers["textDocument/hover"] = lsp.with(handlers.hover, pop_opts)
+handlers["textDocument/signatureHelp"] = lsp.with(handlers.signature_help, pop_opts)
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -130,4 +138,6 @@ require'lspconfig'.sumneko_lua.setup{
 		}
 	}
 }
+
+require'lspconfig'.eslint.setup{}
 
