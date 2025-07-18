@@ -42,6 +42,7 @@ return require('packer').startup(function()
 		"nvim-lua/plenary.nvim",
 	}
   use 'tpope/vim-eunuch'
+  use 'editorconfig/editorconfig-vim'
 	-- =====================================
 	-- End General plugins
 	-- =====================================
@@ -127,6 +128,14 @@ return require('packer').startup(function()
     branch = "main",
     config = require'zac.lspsaga'
 	})
+
+  use({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  })
+
 	-- =====================================
 	-- End Diagnostics plugins
 	-- =====================================
