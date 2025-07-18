@@ -48,13 +48,15 @@ return require('packer').startup(function()
 	-- GIT plugins
 	use {
 		"tpope/vim-fugitive",
-		"f-person/git-blame.nvim"
+		"f-person/git-blame.nvim",
+		"airblade/vim-gitgutter"
 	}
 
 	-- LSP plugins
 	use {
 		"williamboman/nvim-lsp-installer",
 		"neovim/nvim-lspconfig", -- Configurations for Nvim LSP
+		"onsails/lspkind.nvim",
 	}
 
 	-- Diagnostic plugins
