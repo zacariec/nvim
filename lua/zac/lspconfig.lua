@@ -42,6 +42,12 @@ local lsp_flags = {
 -- Setup nvim-cmp.
 local cmp = require'cmp'
 cmp.setup({
+	formatting = {
+		format = require'lspkind'.cmp_format({
+			mode = "symbol",
+			maxwidth = 50
+		})
+	},
 	snippet = {
 		expand = function(args)
 			vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
