@@ -44,12 +44,6 @@ keymap.set(
 )
 keymap.set(
 	"n",
-	"<leader>fr",
-	"<cmd>Telescope oldfiles<CR>",
-	{ desc = "Telescope fuzzy find recent files", silent = true, noremap = true }
-)
-keymap.set(
-	"n",
 	"<leader>fs",
 	"<cmd>Telescope live_grep<CR>",
 	{ desc = "Telescope fuzzy find recent files", silent = true, noremap = true }
@@ -75,7 +69,7 @@ keymap.set(
 keymap.set(
 	"n",
 	"<leader>ca",
-	"<cmd>lua vim.lsp.buf.code_action()<CR>",
+	"<cmd>Lspsaga code_action<CR>",
 	{ desc = "Opens code action for the current line", silent = true, noremap = true }
 )
 

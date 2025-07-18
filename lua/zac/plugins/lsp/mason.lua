@@ -21,7 +21,6 @@ return {
 
 		mason_lspconfig.setup({
 			ensure_installed = {
-				"eslint",
 				"denols",
 				"tsserver",
 				"lua_ls",
@@ -37,9 +36,7 @@ return {
 
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"prettier",
 				"stylua",
-				"eslint",
 			},
 		})
 	end,

@@ -3,7 +3,11 @@ return {
   version = "0.1.x",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = have_make and "make" or "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+      enabled = have_make or have_cmake,
+    },
     "nvim-tree/nvim-web-devicons",
     "folke/todo-comments.nvim",
   },
