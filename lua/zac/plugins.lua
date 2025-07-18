@@ -66,7 +66,14 @@ return require('packer').startup(function()
 	use {
 		"tpope/vim-fugitive",
 		"f-person/git-blame.nvim",
-		"airblade/vim-gitgutter"
+		"airblade/vim-gitgutter",
+	}
+
+	use {
+  	'lewis6991/gitsigns.nvim',
+  	config = function()
+    	require('gitsigns').setup()
+  	end
 	}
 
 	-- LSP plugins
