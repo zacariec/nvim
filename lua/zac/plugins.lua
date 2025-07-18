@@ -37,10 +37,7 @@ return require('packer').startup(function()
 	-- =====================================
 	-- Start General plugins
 	-- =====================================
-	use {
-  	"wbthomason/packer.nvim",
-		"nvim-lua/plenary.nvim",
-	}
+	use "wbthomason/packer.nvim"
   use 'tpope/vim-eunuch'
   use 'editorconfig/editorconfig-vim'
   use {
@@ -53,6 +50,8 @@ return require('packer').startup(function()
       })
     end
   }
+  use "theprimeagen/harpoon"
+  use "mbbill/undotree"
   use {
     'jonsmithers/vim-html-template-literals',
     'leafgarland/typescript-vim',
@@ -94,11 +93,9 @@ return require('packer').startup(function()
 	-- =====================================
 	-- Start GIT plugins
 	-- =====================================
-	use {
-		"tpope/vim-fugitive",
-		"f-person/git-blame.nvim",
-		"airblade/vim-gitgutter",
-	}
+	use "tpope/vim-fugitive"
+	use "f-person/git-blame.nvim"
+	use "airblade/vim-gitgutter"
 
 	use {
   	'lewis6991/gitsigns.nvim',
@@ -113,13 +110,27 @@ return require('packer').startup(function()
 	-- =====================================
 	-- Start LSP plugins
 	-- =====================================
-	use {
-		"williamboman/nvim-lsp-installer",
-		"neovim/nvim-lspconfig", -- Configurations for Nvim LSP
-	"onsails/lspkind.nvim",
-		"ray-x/lsp_signature.nvim",
-    "edgedb/edgedb-vim",
-	}
+  use {
+    'VonHeikemen/lsp-zero.nvim',
+    requires = {
+      -- LSP Support
+      {'neovim/nvim-lspconfig'},
+      {'williamboman/mason.nvim'},
+      {'williamboman/mason-lspconfig.nvim'},
+
+      -- Autocompletion
+      {'hrsh7th/nvim-cmp'},
+      {'hrsh7th/cmp-buffer'},
+      {'hrsh7th/cmp-path'},
+      {'saadparwaiz1/cmp_luasnip'},
+      {'hrsh7th/cmp-nvim-lsp'},
+      {'hrsh7th/cmp-nvim-lua'},
+
+      -- Snippets
+      {'L3MON4D3/LuaSnip'},
+      {'rafamadriz/friendly-snippets'},
+    }
+  }
   use "prettier/vim-prettier"
 
 	-- =====================================
@@ -157,30 +168,8 @@ return require('packer').startup(function()
 	-- Start Autocompletion plugins
 	-- =====================================
   use {
-		"hrsh7th/nvim-cmp",
-    requires = {
-      'quangnguyen30192/cmp-nvim-ultisnips',
-      'nvim-treesitter/nvim-treesitter',
-      config = function ()
-        require('cmp-nvim-ultisnips').setup{}
-      end,
-    }
-  }
-
-  use {
     "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp"
   }
-
-	use {
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"hrsh7th/cmp-cmdline",
-		"windwp/nvim-ts-autotag",
-    "rcarriga/nvim-notify",
-    "simrat39/rust-tools.nvim",
-    "mfussenegger/nvim-dap"
-	}
 
 	-- =====================================
 	-- End Autcompletetion plugins
@@ -195,19 +184,6 @@ return require('packer').startup(function()
 	}
 	-- =====================================
 	-- End autpairs plugins
-	-- =====================================
-
-	-- =====================================
-	-- Start Snippet plugins
-	-- =====================================
-  
-  use {
-    "SirVer/ultisnips",
-    "honza/vim-snippets"
-  }
-
-	-- =====================================
-	-- End snippet pluings
 	-- =====================================
 
 	-- =====================================
@@ -234,10 +210,7 @@ return require('packer').startup(function()
 	-- Treesitter plugins
 	-- =====================================
   use "virchau13/tree-sitter-astro"
-  use {
-    "nvim-treesitter/nvim-treesitter",
-    run = ':TSUpdate'
-  }
+  use { "nvim-treesitter/nvim-treesitter", run = ':TSUpdate' }
   use {
     'nvim-treesitter/nvim-treesitter-context',
     config = function ()
@@ -283,7 +256,6 @@ return require('packer').startup(function()
     end
   }
 
-  use 'wuelnerdotexe/vim-astro'
 	-- =====================================
 	-- End Treesitter plugins
 	-- =====================================

@@ -1,34 +1,28 @@
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local cmp = require("cmp")
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local lsp = require("lsp-zero")
+
+lsp.preset("recommended")
+
+lsp.ensure_installed {
+  "eslint",
+  "denols",
+  "tsserver",
+  "sumneko_lua",
+  "tailwindcss",
+  "html",
+  "astro",
+  "rust_analyzer",
+}
+
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
-require'lsp_signature'.setup()
 
-local lsp = vim.lsp
-local handlers = lsp.handlers
-
--- Hover doc popup
-local pop_opts = { border = "rounded", max_width = 80 }
-handlers["textDocument/hover"] = lsp.with(handlers.hover, pop_opts)
-handlers["textDocument/signatureHelp"] = lsp.with(handlers.signature_help, pop_opts)
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-	require'lsp_signature'.on_attach({
-		bind = true,
-		handler_opts = {
-			border = "rounded"
-		}
-	}, bufnr)-- Enable completion triggered by <c-x><c-o>
-	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
+lsp.on_attach(function(_, bufnr)
 	local bufopts = { noremap=true, silent=true, buffer=bufnr }
 	vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
 	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
@@ -44,145 +38,9 @@ local on_attach = function(client, bufnr)
 	vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
 	vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
 	vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-	vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
-end
 
-local lsp_flags = {
-	-- This is the default in Nvim 0.7+
-	debounce_text_changes = 50,
-}
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+end)
 
--- Setup nvim-cmp.
-local cmp = require'cmp'
-cmp.setup({
-	formatting = {},
-	snippet = {},
-	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
-	},
-	mapping = cmp.mapping.preset.insert({
-		['<C-b>'] = cmp.mapping.scroll_docs(-4),
-		['<C-f>'] = cmp.mapping.scroll_docs(4),
-		['<C-Space>'] = cmp.mapping.complete(),
-		['<C-e>'] = cmp.mapping.abort(),
-		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-	}),
-	sources = cmp.config.sources({
-		{ name = 'nvim_lsp' },
-    { name = "cmp_tabnine" }
-	}, {
-		{ name = 'buffer' },
-	})
-})
-
--- Set configuration for specific filetype.
-cmp.setup.filetype('gitcommit', {
-	sources = cmp.config.sources({
-		{ name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-	}, {
-		{ name = 'buffer' },
-	})
-})
-
--- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline('/', {
-	mapping = cmp.mapping.preset.cmdline(),
-	sources = {
-		{ name = 'buffer' }
-	}
-})
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-	mapping = cmp.mapping.preset.cmdline(),
-	sources = cmp.config.sources({
-		{ name = 'path' }
-	}, {
-		{ name = 'cmdline' }
-	})
-})
-
--- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local lspconfig = require'lspconfig'
-
-M = require "zac.globals"
-
-require'lspconfig'.sumneko_lua.setup{
-  on_attach = on_attach,
-  root_dir = require'lspconfig'.util.root_pattern(".luarc.json"),
-  flags = lsp_flags,
-  autostart = true,
-  capabilities = capabilities,
-	settings = {
-		Lua = {
-			diagnostics = {
-				globals = {
-					'vim',
-					'use'
-				}
-			}
-		}
-	}
-}
-
-lspconfig.astro.setup{
-  on_attach = on_attach,
-  flags = lsp_flags,
-  autostart = true,
-  capabilities = capabilities,
-}
-
-lspconfig.denols.setup{
-  on_attach = on_attach,
-  root_dir = lspconfig.util.root_pattern("deno.json"),
-  flags = lsp_flags,
-  autostart = true,
-  capabilities = capabilities,
-  single_file_support = false,
-}
-
-lspconfig.tsserver.setup {
-  on_attach = on_attach,
-  root_dir = lspconfig.util.root_pattern("package.json"),
-  flags = lsp_flags,
-  autostart = true,
-  capabilities = capabilities,
-}
-
-lspconfig.tailwindcss.setup {
-  on_attach = on_attach,
-  root_dir = lspconfig.util.root_pattern("tailwind.config.*", "package.json"),
-  flags = lsp_flags,
-  autostart = true,
-  capabilities = capabilities
-}
-
-lspconfig.html.setup {
-  on_attach = on_attach,
-  flags = lsp_flags,
-  autostart = true,
-  filetypes = { "html", "liquid" },
-  capabilities = capabilities,
-  init_options = {
-    configurationSection = { "html", "css", "javascript", "liquid" },
-    embeddedLanguages = {
-      css = true,
-      javascript = true,
-    },
-    provideFormatter = true
-  },
-}
-
-for _,server in pairs(M.autoservers) do
-  lspconfig[server].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
-  }
-end
-
-vim.g.markdown_fenced_languages = {
-  "ts=typescript"
-}
+lsp.nvim_workspace()
+lsp.setup()
